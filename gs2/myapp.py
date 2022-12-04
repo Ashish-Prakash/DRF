@@ -33,7 +33,7 @@ def put_data():
 
 def update_data():
     data = {
-        'id': 7,
+        'id': 9,
         'name': 'Gulia',
         'roll': 122,
     }
