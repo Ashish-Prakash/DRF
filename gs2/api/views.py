@@ -1,6 +1,6 @@
 from django.shortcuts import render
 import io
-from rest_framework.parsers     import JSONParser
+from rest_framework.parsers import JSONParser
 from .models import Student
 from .serializers import StudentSerializer
 from rest_framework.renderers import JSONRenderer
