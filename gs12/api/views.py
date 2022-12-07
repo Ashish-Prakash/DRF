@@ -1,16 +1,15 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.request import Request
+from rest_framework.views import APIView
 from .models import Student
 from .serializers import StudentSerializer
 from rest_framework import status
 # Create your views here.
 
 
-@api_view(['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
-def studentapi(request, pk=None):
-    if request.method == 'GET':
+class studentAPI(APIView):
+    def get(self, request, pk=None, format=None):
         id = pk
         if id is not None:
             stu = Student.objects.get(id=id)
@@ -21,7 +20,7 @@ def studentapi(request, pk=None):
         serializer = StudentSerializer(stu, many=True)
         return Response(serializer.data)
 
-    if request.method == 'POST':
+    def post(self, request, format=None):
         data = request.data
         serializer = StudentSerializer(data=data)
         if serializer.is_valid():
@@ -30,7 +29,7 @@ def studentapi(request, pk=None):
             return Response(res, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    if request.method == 'PUT':
+    def put(self, request, pk, format=None):
         data = request.data
         id = pk
         stu = Student.objects.get(pk=id)
@@ -41,7 +40,7 @@ def studentapi(request, pk=None):
             return Response(res, status=status.HTTP_202_ACCEPTED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    if request.method == 'PATCH':
+    def patch(self, request, pk, format=None):
         data = request.data
         id = pk
         stu = Student.objects.get(pk=id)
@@ -52,7 +51,7 @@ def studentapi(request, pk=None):
             return Response(res, status=status.HTTP_202_ACCEPTED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    if request.method == 'DELETE':
+    def delete(self, request, pk, format=None):
         id = pk
         stu = Student.objects.get(pk=id)
         stu.delete()
