@@ -7,5 +7,5 @@ class StudentModelViewSet(viewsets.ModelViewSet):
     serializer_class = StudentSerializer
 
 class StudentReadOnlyModelViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Student.objects.all()
+    queryset = Student.objects.prefetch_related()
     serializer_class = StudentSerializer
